@@ -5,7 +5,7 @@ import { api } from '../../api';
 import { BackBar, Button, Eyebrow, Screen, useUi } from '../../components/ui';
 import { DEFAULT_URL, saveConfig, useConfig } from '../../config';
 import { refreshAll } from '../../store';
-import { F, useTheme } from '../../theme';
+import { F, useTheme, fs } from '../../theme';
 
 export default function Connection() {
   const u = useUi();
@@ -36,7 +36,7 @@ export default function Connection() {
     if (router.canGoBack()) router.back();
     else router.replace('/');
   };
-  const input = { height: 48, borderRadius: 12, paddingHorizontal: 14, backgroundColor: c.panel, color: c.text, fontFamily: F.sans, fontSize: 15 };
+  const input = { height: 48, borderRadius: 12, paddingHorizontal: 14, backgroundColor: c.panel, color: c.text, fontFamily: F.sans, fontSize: fs(15) };
 
   return (
     <View style={{ flex: 1, backgroundColor: c.bg }}>

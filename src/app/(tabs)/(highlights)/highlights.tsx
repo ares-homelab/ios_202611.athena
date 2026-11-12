@@ -5,7 +5,7 @@ import { openBook } from '../../../components/bits';
 import { Icon } from '../../../components/icon';
 import { Chip, Empty, ErrorBox, Screen, TitleRow, useUi } from '../../../components/ui';
 import { useHighlights } from '../../../data';
-import { F, useTheme } from '../../../theme';
+import { F, useTheme, fs } from '../../../theme';
 
 type View_ = 'recent' | 'book' | 'notes';
 
@@ -17,7 +17,7 @@ function Item({ h, last, showBook }: { h: AnyHighlight; last: boolean; showBook:
     <View style={[{ gap: 10, paddingTop: 6, paddingBottom: 18 }, !last && u.line]}>
       {h.text ? (
         <Pressable onPress={() => openBook(h.calibre_id)}>
-          <Text style={{ fontFamily: F.serif, fontSize: 22, lineHeight: 29, color: c.text }}>“{h.text.trim()}”</Text>
+          <Text style={{ fontFamily: F.serif, fontSize: fs(22), lineHeight: fs(29), color: c.text }}>“{h.text.trim()}”</Text>
         </Pressable>
       ) : null}
       <View style={[u.row, { justifyContent: 'space-between' }]}>
@@ -79,7 +79,7 @@ export default function Highlights() {
           placeholderTextColor={c.muted}
           clearButtonMode="while-editing"
           autoCorrect={false}
-          style={{ flex: 1, fontFamily: F.sans, fontSize: 15, color: c.text }}
+          style={{ flex: 1, fontFamily: F.sans, fontSize: fs(15), color: c.text }}
         />
       </View>
       <View style={{ flexDirection: 'row', gap: 8 }}>

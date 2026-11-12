@@ -3,14 +3,14 @@ import { openBook } from '../../../components/bits';
 import { Empty, ErrorBox, Screen, TitleRow, useUi } from '../../../components/ui';
 import { useStats } from '../../../data';
 import { dayMonth, hm, monthShort, seconds } from '../../../format';
-import { F, useTheme } from '../../../theme';
+import { F, useTheme, fs } from '../../../theme';
 
 const Big = ({ value, label }: { value: string; label: string }) => {
   const u = useUi();
   const { c } = useTheme();
   return (
     <View style={{ gap: 4 }}>
-      <Text style={{ fontFamily: F.serifBold, fontSize: 44, lineHeight: 48, color: c.text }}>{value}</Text>
+      <Text style={{ fontFamily: F.serifBold, fontSize: fs(44), lineHeight: fs(48), color: c.text }}>{value}</Text>
       <Text style={[u.soft, { color: c.muted }]}>{label}</Text>
     </View>
   );
@@ -60,7 +60,7 @@ export default function StatsScreen() {
                   const now = m.month === thisMonth && h < 10;
                   return (
                     <View key={m.month} style={{ flex: 1, alignItems: 'center', gap: 6 }}>
-                      <Text style={{ fontFamily: F.sans, fontSize: 11, color: c.soft }}>{m.hours.toFixed(1)}</Text>
+                      <Text style={{ fontFamily: F.sans, fontSize: fs(11), color: c.soft }}>{m.hours.toFixed(1)}</Text>
                       <View style={{ width: '100%', height: h, borderTopLeftRadius: 4, borderTopRightRadius: 4, backgroundColor: now ? c.trackOn : c.progress }} />
                     </View>
                   );
@@ -68,7 +68,7 @@ export default function StatsScreen() {
               </View>
               <View style={{ flexDirection: 'row', gap: 12, borderTopWidth: 1, borderTopColor: c.selected, paddingTop: 8 }}>
                 {months.map((m) => (
-                  <Text key={m.month} style={{ flex: 1, textAlign: 'center', fontFamily: F.sans, fontSize: 11, color: c.muted }}>
+                  <Text key={m.month} style={{ flex: 1, textAlign: 'center', fontFamily: F.sans, fontSize: fs(11), color: c.muted }}>
                     {monthShort(m.month)}
                   </Text>
                 ))}

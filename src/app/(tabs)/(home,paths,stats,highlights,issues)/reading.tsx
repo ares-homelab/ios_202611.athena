@@ -3,7 +3,7 @@ import { openBook } from '../../../components/bits';
 import { Bar, BackBar, Cover, Empty, ErrorBox, Screen, useUi } from '../../../components/ui';
 import { useReading } from '../../../data';
 import { dayMonth, percent } from '../../../format';
-import { F, useTheme } from '../../../theme';
+import { F, useTheme, fs } from '../../../theme';
 
 export default function ReadingScreen() {
   const u = useUi();
@@ -20,7 +20,7 @@ export default function ReadingScreen() {
           <Pressable key={`${r.calibre_id}-${i}`} onPress={() => openBook(r.calibre_id)} style={[u.row, { gap: 14, paddingBottom: 14 }, i < items.length - 1 && u.line]}>
             <Cover id={r.calibre_id} title={r.title} width={48} height={72} radius={4} />
             <View style={{ flex: 1, gap: 6 }}>
-              <Text style={{ fontFamily: F.serifBold, fontSize: 19, lineHeight: 21, color: c.text }}>{r.title}</Text>
+              <Text style={{ fontFamily: F.serifBold, fontSize: fs(19), lineHeight: fs(21), color: c.text }}>{r.title}</Text>
               <Text style={u.muted}>{r.authors}</Text>
               <Bar value={r.progress} />
               <Text style={u.muted}>

@@ -2,7 +2,7 @@ import { Alert, Pressable, Text, View } from 'react-native';
 import type { Entry } from '../api';
 import { usePins } from '../data';
 import { perform } from '../store';
-import { F, useTheme } from '../theme';
+import { F, useTheme, fs } from '../theme';
 import { openBook, segmentsOf } from './bits';
 import { BackBar, Empty, ErrorBox, IconButton, Screen, Segments, StatusPill, useUi, Cover } from './ui';
 
@@ -20,10 +20,10 @@ function EntryRow({ e, next, last }: { e: Entry; next: boolean; last: boolean })
         next ? { backgroundColor: c.panel, borderRadius: 14, paddingHorizontal: 14, marginHorizontal: -14, marginVertical: 6 } : !last && { borderBottomWidth: 1, borderBottomColor: c.line },
       ]}
     >
-      <Text style={{ width: 22, fontFamily: F.serif, fontSize: 18, color: next ? c.link : c.muted }}>{e.n}</Text>
+      <Text style={{ width: 22, fontFamily: F.serif, fontSize: fs(18), color: next ? c.link : c.muted }}>{e.n}</Text>
       {next ? <Cover id={e.calibre_id} title={e.title} hasCover={e.has_cover} width={34} height={50} radius={3} /> : null}
       <View style={{ flex: 1, gap: 3 }}>
-        <Text style={{ fontFamily: next ? F.sansBold : F.sansMedium, fontSize: 15, color: c.text }}>{e.title}</Text>
+        <Text style={{ fontFamily: next ? F.sansBold : F.sansMedium, fontSize: fs(15), color: c.text }}>{e.title}</Text>
         {sub ? <Text style={[u.muted, next && { color: c.soft }]}>{sub}</Text> : null}
       </View>
       <StatusPill status={e.status} strong={next} />
@@ -73,8 +73,8 @@ export function EntryScreen({
       <Screen top={false} gap={20} refreshing={loading && entries.length > 0} onRefresh={refresh}>
         <View style={{ gap: 8 }}>
           <Text style={u.eyebrow}>{eyebrow.toUpperCase()}</Text>
-          <Text style={{ fontFamily: F.serifBold, fontSize: 38, lineHeight: 40, color: c.text }}>{title}</Text>
-          {description ? <Text style={[u.soft, { fontSize: 14, lineHeight: 20 }]}>{description}</Text> : null}
+          <Text style={{ fontFamily: F.serifBold, fontSize: fs(38), lineHeight: fs(40), color: c.text }}>{title}</Text>
+          {description ? <Text style={[u.soft, { fontSize: fs(14), lineHeight: fs(20) }]}>{description}</Text> : null}
         </View>
         {error ? <ErrorBox error={error} onRetry={refresh} stale={entries.length > 0} /> : null}
         {entries.length ? (

@@ -175,4 +175,7 @@ export const F = {
   sansBold: 'Inter_600SemiBold',
 };
 
+export const TEXT_SCALE = 1.12;
+export const fs = (n: number) => Math.round(n * TEXT_SCALE);
+
 export const S = { page: 24, gap: 10, radius: 14, card: 16 };

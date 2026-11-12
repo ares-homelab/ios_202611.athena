@@ -4,7 +4,7 @@ import { Icon } from '../../../components/icon';
 import { Cover, Empty, ErrorBox, Eyebrow, Screen, TitleRow, useUi } from '../../../components/ui';
 import { useIssues } from '../../../data';
 import { clock, dayMonth, longDate, longDateYear, weekday } from '../../../format';
-import { F, useTheme } from '../../../theme';
+import { F, useTheme, fs } from '../../../theme';
 
 const short = (d: string) => weekday(d).slice(0, 3);
 
@@ -25,7 +25,7 @@ export default function IssuesScreen() {
           <Cover id={latest.id} title="the new yorker" author={latest.date ? dayMonth(latest.date) + ` ${latest.date.slice(0, 4)}` : ''} hasCover={latest.has_cover} width={104} height={140} radius={4} />
           <View style={{ flex: 1, gap: 8 }}>
             <Eyebrow style={{ color: c.link }}>latest</Eyebrow>
-            <Text style={{ fontFamily: F.serifBold, fontSize: 24, lineHeight: 27, color: c.text }}>{longDate(latest.date ?? latest.added)}</Text>
+            <Text style={{ fontFamily: F.serifBold, fontSize: fs(24), lineHeight: fs(27), color: c.text }}>{longDate(latest.date ?? latest.added)}</Text>
             <Text style={u.soft}>
               arrived {short(latest.added)} {clock(latest.added)} · {latest.sent ? 'on the kindle' : 'not on the kindle yet'}
             </Text>
@@ -51,13 +51,13 @@ export default function IssuesScreen() {
           <Text style={[u.h3, { marginBottom: 6 }]}>kept issues</Text>
           {issues.map((i, n) => (
             <Pressable key={i.id} onPress={() => openBook(i.id)} style={[u.row, { justifyContent: 'space-between', paddingVertical: 12 }, u.line]}>
-              <Text style={[u.body, { fontSize: 15 }]}>{i.date ? longDateYear(i.date) : i.title}</Text>
+              <Text style={[u.body, { fontSize: fs(15) }]}>{i.date ? longDateYear(i.date) : i.title}</Text>
               <Text style={u.muted}>
                 {n + 1} of {keep}
               </Text>
             </Pressable>
           ))}
-          <Text style={[u.soft, { color: c.muted, marginTop: 10, lineHeight: 20 }]}>
+          <Text style={[u.soft, { color: c.muted, marginTop: 10, lineHeight: fs(20) }]}>
             older issues show here as they arrive. the oldest is removed when a {keep === 4 ? 'fifth' : 'new one'} comes in. issues don&apos;t count toward athena stats.
           </Text>
         </View>

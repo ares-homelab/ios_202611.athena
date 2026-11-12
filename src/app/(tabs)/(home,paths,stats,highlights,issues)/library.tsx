@@ -6,7 +6,7 @@ import { Icon } from '../../../components/icon';
 import { BackBar, Chip, Cover, Empty, ErrorBox, useUi } from '../../../components/ui';
 import { useBooks } from '../../../data';
 import { authors, statusOf } from '../../../format';
-import { F, useTheme } from '../../../theme';
+import { F, useTheme, fs } from '../../../theme';
 
 const fold = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
@@ -37,7 +37,7 @@ export default function Library() {
             clearButtonMode="while-editing"
             autoCorrect={false}
             autoFocus
-            style={{ flex: 1, fontFamily: F.sans, fontSize: 15, color: c.text }}
+            style={{ flex: 1, fontFamily: F.sans, fontSize: fs(15), color: c.text }}
           />
         </View>
         <View style={{ flexDirection: 'row', gap: 8 }}>
@@ -58,7 +58,7 @@ export default function Library() {
           <Pressable onPress={() => openBook(b.id)} style={[u.row, { gap: 14, paddingVertical: 10 }, u.line]}>
             <Cover id={b.id} title={b.title} hasCover={b.has_cover} width={34} height={50} radius={3} />
             <View style={{ flex: 1, gap: 3 }}>
-              <Text style={{ fontFamily: F.sansMedium, fontSize: 15, color: c.text }} numberOfLines={2}>
+              <Text style={{ fontFamily: F.sansMedium, fontSize: fs(15), color: c.text }} numberOfLines={2}>
                 {b.title}
               </Text>
               <Text style={u.muted} numberOfLines={1}>

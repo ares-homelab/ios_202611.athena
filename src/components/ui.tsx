@@ -5,24 +5,24 @@ import { Pressable, RefreshControl, ScrollView, StyleProp, Text, TextStyle, View
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { api, authHeaders } from '../api';
 import { useConfig } from '../config';
-import { Colors, F, S, useStyles, useTheme } from '../theme';
+import { Colors, F, S, useStyles, useTheme, fs } from '../theme';
 import { Icon, IconName } from './icon';
 
 const make = (c: Colors) => ({
-  h1: { fontFamily: F.serifBold, fontSize: 34, lineHeight: 38, color: c.text },
-  h2: { fontFamily: F.serifBold, fontSize: 24, lineHeight: 28, color: c.text },
-  h3: { fontFamily: F.serifBold, fontSize: 22, lineHeight: 26, color: c.text },
-  body: { fontFamily: F.sans, fontSize: 14, lineHeight: 20, color: c.text },
-  soft: { fontFamily: F.sans, fontSize: 13, lineHeight: 18, color: c.soft },
-  muted: { fontFamily: F.sans, fontSize: 12, lineHeight: 16, color: c.muted },
-  eyebrow: { fontFamily: F.sans, fontSize: 11, letterSpacing: 1.2, color: c.muted },
-  link: { fontFamily: F.sans, fontSize: 13, color: c.link },
+  h1: { fontFamily: F.serifBold, fontSize: fs(34), lineHeight: fs(38), color: c.text },
+  h2: { fontFamily: F.serifBold, fontSize: fs(24), lineHeight: fs(28), color: c.text },
+  h3: { fontFamily: F.serifBold, fontSize: fs(22), lineHeight: fs(26), color: c.text },
+  body: { fontFamily: F.sans, fontSize: fs(14), lineHeight: fs(20), color: c.text },
+  soft: { fontFamily: F.sans, fontSize: fs(13), lineHeight: fs(18), color: c.soft },
+  muted: { fontFamily: F.sans, fontSize: fs(12), lineHeight: fs(16), color: c.muted },
+  eyebrow: { fontFamily: F.sans, fontSize: fs(11), letterSpacing: 1.2, color: c.muted },
+  link: { fontFamily: F.sans, fontSize: fs(13), color: c.link },
   panel: { backgroundColor: c.panel, borderRadius: S.card, padding: S.card },
   tile: { flex: 1, backgroundColor: c.panel, borderRadius: S.radius, paddingVertical: 14, paddingHorizontal: 12, gap: 4 },
-  tileValue: { fontFamily: F.serifBold, fontSize: 28, lineHeight: 30, color: c.text },
+  tileValue: { fontFamily: F.serifBold, fontSize: fs(28), lineHeight: fs(30), color: c.text },
   seg: { flexDirection: 'row' as const, backgroundColor: c.panel, borderRadius: 12, padding: 4, gap: 4 },
   segItem: { flex: 1, height: 38, borderRadius: 9, alignItems: 'center' as const, justifyContent: 'center' as const, flexDirection: 'row' as const, gap: 6 },
-  segText: { fontFamily: F.sansMedium, fontSize: 14, color: c.muted },
+  segText: { fontFamily: F.sansMedium, fontSize: fs(14), color: c.muted },
   chip: { backgroundColor: c.panel, borderRadius: 14, paddingVertical: 6, paddingHorizontal: 12 },
   pill: { borderRadius: 10, borderWidth: 1, paddingVertical: 3, paddingHorizontal: 8 },
   error: { backgroundColor: c.warnBg, borderColor: c.warnLine, borderWidth: 1, borderRadius: S.radius, padding: 14, gap: 10 },
@@ -84,7 +84,7 @@ export function BackBar({ label, right }: { label: string; right?: ReactNode }) 
         style={{ height: 44, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center', gap: 4 }}
       >
         <Icon name="back" size={18} color={c.link} width={1.9} />
-        <Text style={{ fontFamily: F.sans, fontSize: 15, color: c.link }}>{label}</Text>
+        <Text style={{ fontFamily: F.sans, fontSize: fs(15), color: c.link }}>{label}</Text>
       </Pressable>
       {right}
     </View>
@@ -199,7 +199,7 @@ export function Chip({ label, on, onPress }: { label: string; on?: boolean; onPr
         borderColor: c.track,
       }}
     >
-      <Text style={{ fontFamily: on ? F.sansBold : F.sansMedium, fontSize: 13, color: on ? c.onAccent : c.soft }}>{label}</Text>
+      <Text style={{ fontFamily: on ? F.sansBold : F.sansMedium, fontSize: fs(13), color: on ? c.onAccent : c.soft }}>{label}</Text>
     </Pressable>
   );
 }
@@ -220,12 +220,12 @@ export function StatusPill({ status, strong }: { status: string; strong?: boolea
   if (strong)
     return (
       <View style={[u.pill, { backgroundColor: c.accent, borderColor: c.accent }]}>
-        <Text style={{ fontFamily: F.sansBold, fontSize: 11, color: c.onAccent }}>{status}</Text>
+        <Text style={{ fontFamily: F.sansBold, fontSize: fs(11), color: c.onAccent }}>{status}</Text>
       </View>
     );
   return (
     <View style={[u.pill, { borderColor: missing ? c.track : c.trackOn }]}>
-      <Text style={{ fontFamily: F.sans, fontSize: 11, color: missing ? c.muted : c.text }}>{status}</Text>
+      <Text style={{ fontFamily: F.sans, fontSize: fs(11), color: missing ? c.muted : c.text }}>{status}</Text>
     </View>
   );
 }
@@ -266,7 +266,7 @@ export function ErrorBox({ error, onRetry, stale }: { error: string; onRetry: ()
 
 export function Empty({ children }: { children: ReactNode }) {
   const u = useUi();
-  return <Text style={[u.soft, { color: useTheme().c.muted, lineHeight: 20 }]}>{children}</Text>;
+  return <Text style={[u.soft, { color: useTheme().c.muted, lineHeight: fs(20) }]}>{children}</Text>;
 }
 
 const COVERS = ['#3B4A3A', '#5A3B2E', '#2E3A52', '#6B4A2A', '#4A3B52', '#E6DCC4'];
@@ -312,7 +312,7 @@ export function Cover({
             {title}
           </Text>
           {author ? (
-            <Text style={{ fontFamily: F.sans, fontSize: 9.5, letterSpacing: 1, color: lightCover ? '#2A251B' : '#D7CFBD' }} numberOfLines={2}>
+            <Text style={{ fontFamily: F.sans, fontSize: fs(9.5), letterSpacing: 1, color: lightCover ? '#2A251B' : '#D7CFBD' }} numberOfLines={2}>
               {author.toUpperCase()}
             </Text>
           ) : null}
@@ -346,8 +346,8 @@ export function RowLink({ title, sub, onPress, icon }: { title: string; sub?: st
         </View>
       ) : null}
       <View style={{ flex: 1, gap: 2, paddingVertical: 8 }}>
-        <Text style={{ fontFamily: F.sans, fontSize: 15, color: c.text }}>{title}</Text>
-        {sub ? <Text style={{ fontFamily: F.sans, fontSize: 13, color: c.muted }}>{sub}</Text> : null}
+        <Text style={{ fontFamily: F.sans, fontSize: fs(15), color: c.text }}>{title}</Text>
+        {sub ? <Text style={{ fontFamily: F.sans, fontSize: fs(13), color: c.muted }}>{sub}</Text> : null}
       </View>
       <Icon name="next" size={16} color={c.muted} />
     </Pressable>
@@ -358,7 +358,7 @@ export function Group({ label, children }: { label: string; children: ReactNode 
   const { c } = useTheme();
   return (
     <View style={{ gap: 8 }}>
-      <Text style={{ marginHorizontal: 4, marginTop: 8, fontFamily: F.sansBold, fontSize: 12, letterSpacing: 1, color: c.muted }}>{label.toUpperCase()}</Text>
+      <Text style={{ marginHorizontal: 4, marginTop: 8, fontFamily: F.sansBold, fontSize: fs(12), letterSpacing: 1, color: c.muted }}>{label.toUpperCase()}</Text>
       <View style={{ backgroundColor: c.panel, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 4 }}>{children}</View>
     </View>
   );

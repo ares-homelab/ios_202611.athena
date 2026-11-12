@@ -6,7 +6,7 @@ import { Button, Cover, Empty, ErrorBox, IconButton, Screen, Tile, Tiles, useUi 
 import { useHome } from '../../../data';
 import { clock, dayMonth, hm, today, weekday } from '../../../format';
 import { refreshAll, useNet, useOutbox, type Pending } from '../../../store';
-import { F, useTheme } from '../../../theme';
+import { F, useTheme, fs } from '../../../theme';
 
 const pendingLabel = (p: Pending) =>
   p.kind === 'status' ? `${p.title} → ${p.workflow.toLowerCase()}` : p.kind === 'send' ? `send ${p.title} to the kindle` : p.label;
@@ -31,7 +31,7 @@ export default function Home() {
       <View style={[u.row, { justifyContent: 'space-between', alignItems: 'flex-end' }]}>
         <View style={{ gap: 2 }}>
           <Text style={[u.soft, { color: c.muted }]}>{today()}</Text>
-          <Text style={{ fontFamily: F.serifMediumItalic, fontSize: 40, lineHeight: 46, letterSpacing: 0.5, color: c.text }}>athena</Text>
+          <Text style={{ fontFamily: F.serifMediumItalic, fontSize: fs(40), lineHeight: fs(46), letterSpacing: 0.5, color: c.text }}>athena</Text>
         </View>
         <View style={[u.row, { gap: 6, marginRight: -10 }]}>
           <View style={[u.row, { gap: 6 }]}>
@@ -58,7 +58,7 @@ export default function Home() {
           <View style={[u.row, { gap: 12, alignItems: 'flex-start' }]}>
             <Icon name="offline" size={22} color={c.warn} />
             <View style={{ flex: 1, gap: 4 }}>
-              <Text style={[u.body, { fontFamily: F.sansBold, fontSize: 15 }]}>can&apos;t reach ares</Text>
+              <Text style={[u.body, { fontFamily: F.sansBold, fontSize: fs(15) }]}>can&apos;t reach ares</Text>
               <Text style={u.soft}>
                 {savedAt ? `showing what was saved at ${savedAt}. ` : ''}connect tailscale or come home to sync.
               </Text>

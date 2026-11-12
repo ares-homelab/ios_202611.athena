@@ -5,7 +5,7 @@ import { openPath, openSection } from '../../../components/bits';
 import { Empty, ErrorBox, IconButton, Screen, Segmented, TitleRow, useUi } from '../../../components/ui';
 import { usePaths, useSections } from '../../../data';
 import { roman } from '../../../format';
-import { F, useTheme } from '../../../theme';
+import { F, useTheme, fs } from '../../../theme';
 
 function Row({ mark, title, about, counts, pinned, onPress, last }: { mark?: string; title: string; about?: string | null; counts: string; pinned?: boolean; onPress: () => void; last?: boolean }) {
   const u = useUi();
@@ -18,9 +18,9 @@ function Row({ mark, title, about, counts, pinned, onPress, last }: { mark?: str
         pinned && { backgroundColor: c.bar, marginHorizontal: -24, paddingHorizontal: 24 },
       ]}
     >
-      {mark !== undefined ? <Text style={{ width: 26, marginTop: 2, fontFamily: F.serifItalic, fontSize: 22, color: c.link }}>{mark}</Text> : null}
+      {mark !== undefined ? <Text style={{ width: 26, marginTop: 2, fontFamily: F.serifItalic, fontSize: fs(22), color: c.link }}>{mark}</Text> : null}
       <View style={{ flex: 1, gap: 6 }}>
-        <Text style={{ fontFamily: F.serifBold, fontSize: 21, lineHeight: 23, color: c.text }}>{title}</Text>
+        <Text style={{ fontFamily: F.serifBold, fontSize: fs(21), lineHeight: fs(23), color: c.text }}>{title}</Text>
         {about ? <Text style={[u.soft, { color: c.muted }]}>{about}</Text> : null}
         <Text style={[u.muted, { color: c.soft }]}>
           {counts}

@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import { Icon, IconName } from '../../components/icon';
-import { F, useTheme } from '../../theme';
+import { F, useTheme, fs } from '../../theme';
 
 const TABS: [string, string, IconName][] = [
   ['(home)', 'home', 'home'],
@@ -19,7 +19,7 @@ export default function TabsLayout() {
         tabBarActiveTintColor: c.link,
         tabBarInactiveTintColor: c.muted,
         tabBarStyle: { backgroundColor: c.bar, borderTopColor: c.line },
-        tabBarLabelStyle: { fontFamily: F.sans, fontSize: 11 },
+        tabBarLabelStyle: { fontFamily: F.sans, fontSize: fs(11) },
         sceneStyle: { backgroundColor: c.bg },
       }}
     >

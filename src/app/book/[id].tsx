@@ -8,7 +8,7 @@ import { BackBar, Button, Cover, Empty, ErrorBox, Eyebrow, IconButton, RowLink, 
 import { useBook, useBookHighlights, usePins } from '../../data';
 import { authors, dayMonth, LANGS, plainText, roman, seconds, statusOf } from '../../format';
 import { perform, useOutbox } from '../../store';
-import { F, useTheme } from '../../theme';
+import { F, useTheme, fs } from '../../theme';
 
 export default function BookScreen() {
   const { id: raw } = useLocalSearchParams<{ id: string }>();
@@ -83,8 +83,8 @@ export default function BookScreen() {
         <View style={{ flexDirection: 'row', gap: 18, alignItems: 'flex-end' }}>
           <Cover id={id} title={b.title} author={b.authors[0]} hasCover={b.has_cover} width={118} height={177} shadow />
           <View style={{ flex: 1, gap: 6, paddingBottom: 4 }}>
-            <Text style={{ fontFamily: F.serifBold, fontSize: 28, lineHeight: 30, color: c.text }}>{b.title}</Text>
-            <Text style={[u.soft, { fontSize: 14 }]}>{[authors(b.authors), b.year].filter(Boolean).join(' · ')}</Text>
+            <Text style={{ fontFamily: F.serifBold, fontSize: fs(28), lineHeight: fs(30), color: c.text }}>{b.title}</Text>
+            <Text style={[u.soft, { fontSize: fs(14) }]}>{[authors(b.authors), b.year].filter(Boolean).join(' · ')}</Text>
             <Text style={u.muted}>
               {[pages ? `${pages} pages` : null, language, b.series ? `${b.series}${b.series_index ? ` ${b.series_index}` : ''}` : null, pinned ? 'pinned' : null]
                 .filter(Boolean)
@@ -156,7 +156,7 @@ export default function BookScreen() {
             </View>
             {(allHl ? highlights : highlights.slice(0, 2)).map((h) => (
               <View key={h.id} style={{ borderLeftWidth: 2, borderLeftColor: c.accent, paddingLeft: 14, paddingVertical: 2, gap: 6 }}>
-                {h.text ? <Text style={{ fontFamily: F.serif, fontSize: 18, lineHeight: 24, color: c.soft }}>{h.text}</Text> : null}
+                {h.text ? <Text style={{ fontFamily: F.serif, fontSize: fs(18), lineHeight: fs(24), color: c.soft }}>{h.text}</Text> : null}
                 {h.note ? <Text style={[u.soft, { color: c.text }]}>{h.note}</Text> : null}
                 <Text style={u.muted}>{[h.chapter, h.page ? `p. ${h.page}` : null].filter(Boolean).join(' · ') || 'synced from koreader'}</Text>
               </View>
@@ -167,7 +167,7 @@ export default function BookScreen() {
         {about ? (
           <Pressable onPress={() => setMore(!more)} style={{ gap: 10 }}>
             <Eyebrow>about</Eyebrow>
-            <Text style={[u.soft, { fontSize: 14, lineHeight: 21 }]} numberOfLines={more ? undefined : 6}>
+            <Text style={[u.soft, { fontSize: fs(14), lineHeight: fs(21) }]} numberOfLines={more ? undefined : 6}>
               {about}
             </Text>
           </Pressable>
