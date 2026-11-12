@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "Athena",
+    "slug": "athena",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "athena",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.giovlnv.athena",
+      "icon": {
+        "light": "./assets/icon.png",
+        "dark": "./assets/icon-dark.png"
+      },
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": false,
+          "NSAllowsLocalNetworking": true,
+          "NSExceptionDomains": {
+            "ares": {
+              "NSExceptionAllowsInsecureHTTPLoads": true
+            },
+            "ts.net": {
+              "NSIncludesSubdomains": true,
+              "NSExceptionAllowsInsecureHTTPLoads": true
+            }
+          }
+        }
+      }
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-font",
+      "expo-image",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash.png",
+          "imageWidth": 160,
+          "resizeMode": "contain",
+          "backgroundColor": "#15140F"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

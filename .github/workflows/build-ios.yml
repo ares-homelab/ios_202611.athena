@@ -1,0 +1,48 @@
+name: Build iPhone app
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  ipa:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx expo prebuild --platform ios --clean --non-interactive
+      - name: Build unsigned app
+        run: |
+          WS=$(ls -d ios/*.xcworkspace | head -1)
+          SCHEME=$(basename "$WS" .xcworkspace)
+          xcodebuild -workspace "$WS" -scheme "$SCHEME" -configuration Release -sdk iphoneos \
+            -destination 'generic/platform=iOS' -archivePath build/app.xcarchive archive \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" | tail -40
+          mkdir -p Payload
+          cp -R build/app.xcarchive/Products/Applications/*.app Payload/
+          APP=$(ls -d Payload/*.app | head -1)
+          find "$APP" \( -name "*.framework" -o -name "*.dylib" \) -print0 | xargs -0 -I{} codesign -f -s - {}
+          codesign -f -s - "$APP"
+          zip -qr Athena.ipa Payload
+      - name: Keep the test build
+        if: github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/tags/v')
+        uses: actions/upload-artifact@v4
+        with:
+          name: Athena-${{ github.run_number }}
+          path: Athena.ipa
+      - name: Publish release
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest Athena.ipa --title "Athena (build ${{ github.run_number }})" \
+            --notes "Unsigned build. ares downloads Athena.ipa and installs it with marsign."
