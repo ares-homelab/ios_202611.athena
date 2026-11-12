@@ -57,7 +57,16 @@
       "fallbackToCacheTimeout": 0,
       "requestHeaders": {
         "expo-channel-name": "production"
+      },
+      "url": "https://u.expo.dev/e445a7cd-0879-4231-9339-6314305b43c5"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "e445a7cd-0879-4231-9339-6314305b43c5"
       }
-    }
+    },
+    "owner": "laviencats",
+    "android": {}
   }
 }
