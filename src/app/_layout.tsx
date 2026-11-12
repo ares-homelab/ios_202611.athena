@@ -6,6 +6,7 @@ import { Inter_400Regular } from '@expo-google-fonts/inter/400Regular';
 import { Inter_500Medium } from '@expo-google-fonts/inter/500Medium';
 import { Inter_600SemiBold } from '@expo-google-fonts/inter/600SemiBold';
 import { useFonts } from 'expo-font';
+import * as Updates from 'expo-updates';
 import { router, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -37,7 +38,21 @@ export default function RootLayout() {
     if (!loaded) return;
     SplashScreen.hideAsync().catch(() => {});
     if (!getConfig().token) setTimeout(() => router.push('/settings/connection'), 0);
-    const sub = AppState.addEventListener('change', (s) => s === 'active' && flush());
+    let pending = false;
+    const fetchUpdate = async () => {
+      if (!Updates.isEnabled) return;
+      try {
+        if ((await Updates.checkForUpdateAsync()).isAvailable) pending = !!(await Updates.fetchUpdateAsync()).isNew;
+      } catch {}
+    };
+    fetchUpdate();
+    const sub = AppState.addEventListener('change', (s) => {
+      if (s === 'active') {
+        flush();
+        fetchUpdate();
+      }
+      if (s === 'background' && pending) Updates.reloadAsync().catch(() => {});
+    });
     return () => sub.remove();
   }, [loaded]);
   if (!loaded) return null;

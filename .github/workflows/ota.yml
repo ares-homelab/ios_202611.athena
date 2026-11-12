@@ -1,0 +1,34 @@
+name: Publish over-the-air update
+
+on:
+  workflow_run:
+    workflows: [Checks]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - name: Skip until set up
+        id: ready
+        run: |
+          if grep -q 'u.expo.dev' app.json; then echo ok=1 >> "$GITHUB_OUTPUT"; else echo ok=0 >> "$GITHUB_OUTPUT"; fi
+      - if: steps.ready.outputs.ok == '1'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - if: steps.ready.outputs.ok == '1'
+        run: npm ci
+      - if: steps.ready.outputs.ok == '1'
+        env:
+          MSG: ${{ github.event.workflow_run.head_commit.message || 'manual update' }}
+        run: npx eas-cli@latest update --channel production --platform ios --non-interactive --message "$(echo "$MSG" | head -1)"
